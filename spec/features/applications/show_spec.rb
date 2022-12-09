@@ -79,5 +79,31 @@ RSpec.describe Application, type: :feature do
 
       expect(page).to_not have_link("Sylvester", href: "/pets/#{pet_3.id}")
     end
+    
+    #us4
+    describe 'searching for pets for application' do
+      it "shows an 'Add a Pet to this Application' section when not yet submitted" do
+        visit "/applications/#{application_2.id}" # pending application
+
+        expect(application_2.can_add_pets?).to be true 
+        expect(page).to have_content("Add a Pet to this Application")
+
+        visit "/applications/#{application.id}" # rejected application
+        expect(application.can_add_pets?).to be false 
+        expect(page).to_not have_content("Add a Pet to this Application")
+      end
+
+      xit 'has a text search field to search for pets by name' do
+        
+      end
+      
+      xit 'returns to application show page after clicking submit' do
+
+      end
+
+      xit 'after returning to show page, pet names matching search appear below' do
+
+      end
+    end
   end
 end

@@ -18,3 +18,7 @@
     <li><%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
   <% end %>
 </ul>
+
+<% if @application.can_add_pets? %>
+  <h3><%= "Add a Pet to this Application" %></h3> 
+<% end %>
