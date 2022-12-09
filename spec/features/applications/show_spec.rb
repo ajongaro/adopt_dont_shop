@@ -93,8 +93,12 @@ RSpec.describe Application, type: :feature do
         expect(page).to_not have_content("Add a Pet to this Application")
       end
 
-      xit 'has a text search field to search for pets by name' do
-        
+      it 'has a text search field to search for pets by name' do
+        visit "/applications/#{application_2.id}" # pending application
+
+        expect(application_2.can_add_pets?).to be true 
+        expect(page).to have_field("Pet Name")
+        expect(page).to have_button("Search")
       end
       
       xit 'returns to application show page after clicking submit' do

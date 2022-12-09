@@ -21,4 +21,11 @@
 
 <% if @application.can_add_pets? %>
   <h3><%= "Add a Pet to this Application" %></h3> 
+
+  <%= form_with url: "/applications", method: :get do |form| %>
+    <%= form.label :query, "Pet Names:" %><br>
+    <%= form.text_field :query %>
+    <%= form.submit "Search" %>
+  <% end %>
+
 <% end %>
