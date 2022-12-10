@@ -1,16 +1,18 @@
 <h1><%= @application.human_name %>'s Application Details</h1>
-
-<h2>Applicant Details</h2>
-<p><b>Street Address:</b> <%= @application.street_address %></p>
-<p><b>City:</b> <%= @application.city %></p>
-<p><b>State:</b> <%= @application.state %></p>
-<p><b>Zip:</b> <%= @application.zip %></p>
-<p><b>Status:</b> <%= @application.status %></p>
-
-<h2>General Details</h2>
-<p><b>Description:</b> <%= @application.description %></p>
-<p><b>Created At:</b> <%= @application.created_at %></p>
-<p><b>Updated At:</b> <%= @application.updated_at %></p>
+<p>
+  <b>Description:</b> <%= @application.description %><br>
+</p>
+<p>
+  <b>Street Address:</b> <%= @application.street_address %><br>
+  <b>City:</b> <%= @application.city %><br>
+  <b>State:</b> <%= @application.state %><br>
+  <b>Zip:</b> <%= @application.zip %><br>
+  <b>Status:</b> <%= @application.status %>
+</p>
+<p>
+  <b>Application Date:</b> <%= @application.created_at %><br>
+  <b>Last Updated:</b> <%= @application.updated_at %>
+</p>
 
 <h2>Animals Applied For</h2>
 <ul>
