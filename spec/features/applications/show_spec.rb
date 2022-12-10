@@ -66,7 +66,7 @@ RSpec.describe Application, type: :feature do
     
     it 'displays all pets for which the application is applying' do
       visit "/applications/#{application.id}"
-      save_and_open_page
+
       expect(page).to have_content("Animals Applied For")
       expect(page).to have_link("Lucky", href: "/pets/#{pet_1.id}")
       expect(page).to have_link("Lobster", href: "/pets/#{pet_2.id}")
@@ -159,8 +159,19 @@ RSpec.describe Application, type: :feature do
 
         visit "/applications/#{application_3.id}"
 
+        expect(page).to have_content("Status: In Progress")
         expect(page).to have_content("Submit Application")
         expect(page).to have_content("Why would you make a good pet owner?")
+
+        fill_in :description, with: "I have money"
+        click_button "Submit"
+        save_and_open_page
+
+        expect(current_path).to eq("/applications/#{application_3.id}")
+        expect(page).to have_content("Description: I have money")
+        expect(page).to have_content("Status: Pending")
+        expect(page).to_not have_content("Submit Application")
+        expect(page).to_not have_content("Why would you make a good pet owner?")
       end
 
       it 'does not have a submit application section if there are no pets on the application' do 
