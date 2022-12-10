@@ -35,8 +35,7 @@ class ApplicationsController < ApplicationController
       :street_address,
       :city,
       :state,
-      :zip,
-      :description
+      :zip
     )
   end
 end

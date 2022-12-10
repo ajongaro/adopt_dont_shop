@@ -6,8 +6,8 @@ class Application < ApplicationRecord
                         :street_address,
                         :city,
                         :state,
-                        :zip,
-                        :description
+                        :zip
+
   def can_add_pets?
     status == "In Progress"
   end
