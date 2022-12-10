@@ -122,6 +122,33 @@ RSpec.describe Application, type: :feature do
         expect(page).to_not have_content("Vester")
         expect(current_path).to eq("/applications/#{application_2.id}")
       end
+      
+      #us5
+      it "has a 'Adopt this Pet' button next to all pet names returned from search" do
+        visit "/applications/#{application_2.id}" # pending application
+
+        fill_in("Pet Names:", with: "Sylvester")
+        click_button("Search")
+
+        expect(current_path).to eq("/applications/#{application_2.id}")
+        expect(page).to have_content("Sylvester")
+        expect(page).to have_button("Adopt this Pet")
+      end
+
+      xit "clicking 'Adopt this Pet' refreshes page and adds that pet to application" do
+        visit "/applications/#{application_2.id}" # pending application
+
+        fill_in("Pet Names:", with: "Sylvester")
+        click_button("Search")
+
+        expect(current_path).to eq("/applications/#{application_2.id}")
+        expect(page).to have_content("Sylvester")
+        expect(page).to have_button("Adopt this Pet")
+
+        click_button("Adopt this Pet", href: "/application_pets/#{pet_3.id}")
+      end
+
+
     end
   end
 end

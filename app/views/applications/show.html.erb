@@ -1,18 +1,18 @@
 <h1><%= @application.human_name %>'s Application Details</h1>
 
-<h3>Address Details</h3>
+<h2>Applicant Details</h2>
 <p><b>Street Address:</b> <%= @application.street_address %></p>
 <p><b>City:</b> <%= @application.city %></p>
 <p><b>State:</b> <%= @application.state %></p>
 <p><b>Zip:</b> <%= @application.zip %></p>
 <p><b>Status:</b> <%= @application.status %></p>
 
-<h3>General Details</h3>
+<h2>General Details</h2>
 <p><b>Description:</b> <%= @application.description %></p>
 <p><b>Created At:</b> <%= @application.created_at %></p>
 <p><b>Updated At:</b> <%= @application.updated_at %></p>
 
-<h3>Animals Applied For</h3>
+<h2>Animals Applied For</h2>
 <ul>
  <% @application.pets.each do |pet| %>
     <li><%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
@@ -20,7 +20,7 @@
 </ul>
 
 <% if @application.can_add_pets? %>
-  <h3><%= "Add a Pet to this Application" %></h3> 
+  <h2><%= "Add a Pet to this Application" %></h2> 
   <%= form_with url: "/applications/#{@application.id}", method: :get do |form| %>
     <%= form.label :query, "Pet Names:" %><br>
     <%= form.text_field :query %>
@@ -28,8 +28,8 @@
   <% end %>
 
   <% if @search_results %>
-    <% @search_results.each do |result| %>
-      <%= result.name %>
+    <% @search_results.each do |pet| %>
+      <%= pet.name %><%= button_to "Adopt this Pet", href: "/application_pets/#{pet.id}/new" %>
     <% end %>
   <% end %>
 <% end %>
