@@ -26,10 +26,10 @@
     <%= form.text_field :query %>
     <%= form.submit "Search" %>
   <% end %>
+<% end %>
 
-  <% if @search_results %>
-    <% @search_results.each do |pet| %>
-      <%= pet.name %><%= button_to "Adopt this Pet", href: "/application_pets/#{pet.id}/new" %>
-    <% end %>
+<% if @search_results %>
+  <% @search_results.each do |pet| %>
+    <%= pet.name %><%= button_to "Adopt this Pet", "/application_pets/#{pet.id}/new?application_id=#{@application.id}" %>
   <% end %>
 <% end %>

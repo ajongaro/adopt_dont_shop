@@ -135,7 +135,7 @@ RSpec.describe Application, type: :feature do
         expect(page).to have_button("Adopt this Pet")
       end
 
-      xit "clicking 'Adopt this Pet' refreshes page and adds that pet to application" do
+      it "clicking 'Adopt this Pet' refreshes page and adds that pet to application" do
         visit "/applications/#{application_2.id}" # pending application
 
         fill_in("Pet Names:", with: "Sylvester")
@@ -145,10 +145,12 @@ RSpec.describe Application, type: :feature do
         expect(page).to have_content("Sylvester")
         expect(page).to have_button("Adopt this Pet")
 
-        click_button("Adopt this Pet", href: "/application_pets/#{pet_3.id}")
+        click_button("Adopt this Pet")
+
+        expect(current_path).to eq("/applications/#{application_2.id}")
+        expect(page).to have_content("Sylvester")
+        expect("Sylvester").to appear_before("Add a Pet to this Application")
       end
-
-
     end
   end
 end
