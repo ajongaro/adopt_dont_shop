@@ -27,6 +27,16 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def update 
+    application = Application.find(params[:id])
+    application.update(
+      description: params[:description], 
+      status: "Pending"
+    )
+
+    redirect_to "/applications/#{application.id}"
+  end
+
   private
 
   def permitted_params
@@ -35,8 +45,7 @@ class ApplicationsController < ApplicationController
       :street_address,
       :city,
       :state,
-      :zip,
-      :description
+      :zip
     )
   end
 end
