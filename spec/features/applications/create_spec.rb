@@ -29,4 +29,17 @@ RSpec.describe 'application new page' do
     expect(page).to have_current_path("/applications/#{application.id}")
     expect(page).to have_content("Status: In Progress")
   end
+
+  it 'returns an error message for a partially completed out form' do 
+    visit '/applications/new'
+
+    fill_in 'Human name', with: "Brad Pitt"
+    fill_in 'Street address', with: "123 Hollywood Blvd"
+    fill_in 'City', with: "Los Angeles"
+    fill_in 'Description', with: "Very rich, multiple homes, ample backyard space."
+    click_button 'Submit'
+
+    expect(page).to have_content("State can't be blank")
+    expect(page).to have_content("Zip can't be blank")
+  end
 end
