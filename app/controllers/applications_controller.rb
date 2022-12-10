@@ -6,6 +6,11 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
+
+    if params[:query] 
+      @search_results = Pet.where(name: params[:query])
+    end
+
   end
 
   def create 

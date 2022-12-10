@@ -35,12 +35,14 @@ RSpec.describe Application, type: :feature do
   let!(:pet_1) { Pet.create!(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucky', shelter_id: shelter.id) }
   let!(:pet_2) { Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter.id) }
   let!(:pet_3) { Pet.create!(adoptable: true, age: 1, breed: 'domestic shorthair', name: 'Sylvester', shelter_id: shelter_2.id) }
+  let!(:pet_4) { Pet.create!(adoptable: true, age: 6, breed: 'poodle mix', name: 'Vester', shelter_id: shelter_2.id) }
   
   let!(:application_pets) { ApplicationPet.create!(application_id: application.id, pet_id: pet_1.id) }
   let!(:application_pets_2) { ApplicationPet.create!(application_id: application.id, pet_id: pet_2.id) }
   let!(:application_pets_3) { ApplicationPet.create!(application_id: application.id, pet_id: pet_3.id) }
   let!(:application_pets_4) { ApplicationPet.create!(application_id: application_2.id, pet_id: pet_1.id) }
   let!(:application_pets_5) { ApplicationPet.create!(application_id: application_2.id, pet_id: pet_2.id) }
+
   describe 'application show page' do
     it 'displays the attributes of a single application' do
       visit "/applications/#{application.id}"
@@ -99,14 +101,26 @@ RSpec.describe Application, type: :feature do
         expect(application_2.can_add_pets?).to be true 
         expect(page).to have_field("Pet Name")
         expect(page).to have_button("Search")
+
+        visit "/applications/#{application.id}" # rejected application
+        expect(application.can_add_pets?).to be false 
+        expect(page).to_not have_field("Pet Name")
+        expect(page).to_not have_button("Search")
       end
       
-      xit 'returns to application show page after clicking submit' do
+      it 'returns to application show page after clicking submit and has matching pet name' do
+        visit "/applications/#{application_2.id}" # pending application
 
-      end
+        expect(application_2.can_add_pets?).to be true 
+        expect(page).to have_field("Pet Name")
+        expect(page).to have_button("Search")
 
-      xit 'after returning to show page, pet names matching search appear below' do
+        fill_in("Pet Names:", with: "Sylvester")
+        click_button("Search")
 
+        expect(page).to have_content("Sylvester")
+        expect(page).to_not have_content("Vester")
+        expect(current_path).to eq("/applications/#{application_2.id}")
       end
     end
   end
