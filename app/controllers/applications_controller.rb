@@ -8,6 +8,7 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
 
     if params[:query] 
+      # abstract .where to Model
       @search_results = Pet.where(name: params[:query])
     end
 
