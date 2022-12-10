@@ -61,11 +61,11 @@ RSpec.describe Application, type: :model do
   end
 
   describe '#can_add_pets?' do
-    it 'is true if application is not rejected or accepted' do
+    it 'is true if application is not rejected, accepted, or pending' do
       expect(application.can_add_pets?).to be false
       expect(application_2.can_add_pets?).to be false
       expect(application_3.can_add_pets?).to be true
-      expect(application_4.can_add_pets?).to be true
+      expect(application_4.can_add_pets?).to be false
     end
   end
 end

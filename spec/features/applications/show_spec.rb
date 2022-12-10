@@ -27,7 +27,7 @@ RSpec.describe Application, type: :feature do
         city: "Seattle",
         state: "WA",
         zip: "98101",
-        status: "Pending")}
+        status: "In Progress")}
 
   let!(:shelter) { Shelter.create!(name: 'Mystery Building', city: 'Irvine CA', foster_program: false, rank: 9) }
   let!(:shelter_2) { Shelter.create!(name: 'Paws and Tails', city: 'San Francisco CA', foster_program: true, rank: 7) }

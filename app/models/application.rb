@@ -9,7 +9,6 @@ class Application < ApplicationRecord
                         :zip,
                         :description
   def can_add_pets?
-    application = self.status
-    ["In Progress", "Pending"].include?(application)  
+    status == "In Progress"
   end
 end
