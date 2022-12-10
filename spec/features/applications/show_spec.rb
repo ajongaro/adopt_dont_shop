@@ -1,13 +1,3 @@
-# As a visitor
-# When I visit an applications show page
-# Then I can see the following:
-
-# Name of the Applicant
-# Full Address of the Applicant including street address, city, state, and zip code
-# Description of why the applicant says they'd be a good home for this pet(s)
-# names of all pets that this application is for (all names of pets should be links to their show page)
-# The Application's status, either "In Progress", "Pending", "Accepted", or "Rejected"
-
 require 'rails_helper'
 
 RSpec.describe Application, type: :feature do
@@ -23,6 +13,14 @@ RSpec.describe Application, type: :feature do
   let!(:application_2) { Application.create!(
         human_name: "Aziz Ansari",
         description: "Very funny, entertaining to dogs",
+        street_address: "777 Lucky Street",
+        city: "Seattle",
+        state: "WA",
+        zip: "98101",
+        status: "In Progress")}
+
+  let!(:application_3) { Application.create!(
+        human_name: "Bart Bluck",
         street_address: "777 Lucky Street",
         city: "Seattle",
         state: "WA",
@@ -68,7 +66,7 @@ RSpec.describe Application, type: :feature do
     
     it 'displays all pets for which the application is applying' do
       visit "/applications/#{application.id}"
-      
+      save_and_open_page
       expect(page).to have_content("Animals Applied For")
       expect(page).to have_link("Lucky", href: "/pets/#{pet_1.id}")
       expect(page).to have_link("Lobster", href: "/pets/#{pet_2.id}")
@@ -81,7 +79,7 @@ RSpec.describe Application, type: :feature do
 
       expect(page).to_not have_link("Sylvester", href: "/pets/#{pet_3.id}")
     end
-    
+
     #us4
     describe 'searching for pets for application' do
       it "shows an 'Add a Pet to this Application' section when not yet submitted" do
@@ -150,6 +148,26 @@ RSpec.describe Application, type: :feature do
         expect(current_path).to eq("/applications/#{application_2.id}")
         expect(page).to have_content("Sylvester")
         expect("Sylvester").to appear_before("Add a Pet to this Application")
+      end
+    end
+
+    describe 'application submission' do 
+      it 'has a section to describe why you would be a good owner and a submit button if there are pets on the application' do 
+        application_3.pets << pet_1
+        application_3.pets << pet_2
+        application_3.pets << pet_3 
+
+        visit "/applications/#{application_3.id}"
+
+        expect(page).to have_content("Submit Application")
+        expect(page).to have_content("Why would you make a good pet owner?")
+      end
+
+      it 'does not have a submit application section if there are no pets on the application' do 
+        visit "/applications/#{application_3.id}"
+
+        expect(page).to_not have_content("Submit Application")
+        expect(page).to_not have_content("Why would you make a good pet owner?")
       end
     end
   end
