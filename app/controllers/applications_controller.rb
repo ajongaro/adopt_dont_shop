@@ -1,4 +1,5 @@
 class ApplicationsController < ApplicationController
+
   def new
     
   end
@@ -8,11 +9,16 @@ class ApplicationsController < ApplicationController
   end
 
   def create 
-    application = Application.create(
+    application = Application.new(
       permitted_params.merge({status: "In Progress"})
     )
 
-    redirect_to "/applications/#{application.id}"
+    if application.save
+      redirect_to "/applications/#{application.id}"
+    else
+      redirect_to '/applications/new'
+      flash[:alert] = "Error: #{error_message(application.errors)}"
+    end
   end
 
   private

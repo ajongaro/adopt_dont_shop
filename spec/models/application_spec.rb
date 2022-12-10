@@ -23,4 +23,13 @@ RSpec.describe Application, type: :model do
       expect(application.status).to eq("Rejected")  
     end
   end
+
+  describe 'validations' do 
+    it { should validate_presence_of(:human_name) }
+    it { should validate_presence_of(:street_address) }
+    it { should validate_presence_of(:city) }
+    it { should validate_presence_of(:state) }
+    it { should validate_presence_of(:zip) }
+    it { should validate_presence_of(:description) }
+  end
 end
