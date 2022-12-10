@@ -8,4 +8,7 @@ class Application < ApplicationRecord
                         :state,
                         :zip,
                         :description
+  def can_add_pets?
+    status == "In Progress"
+  end
 end
