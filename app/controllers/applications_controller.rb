@@ -10,7 +10,6 @@ class ApplicationsController < ApplicationController
     if params[:query] 
       @search_results = Pet.search(params[:query])
     end
-
   end
 
   def create 
