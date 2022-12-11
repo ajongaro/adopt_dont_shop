@@ -165,7 +165,6 @@ RSpec.describe Application, type: :feature do
 
         fill_in :description, with: "I have money"
         click_button "Submit"
-        save_and_open_page
 
         expect(current_path).to eq("/applications/#{application_3.id}")
         expect(page).to have_content("Description: I have money")
