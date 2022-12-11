@@ -1,0 +1,46 @@
+<h1><%= @application.human_name %>'s Application Details</h1>
+<p>
+  <b>Description:</b> <%= @application.description %><br>
+</p>
+<p>
+  <b>Street Address:</b> <%= @application.street_address %><br>
+  <b>City:</b> <%= @application.city %><br>
+  <b>State:</b> <%= @application.state %><br>
+  <b>Zip:</b> <%= @application.zip %><br>
+  <b>Status:</b> <%= @application.status %>
+</p>
+<p>
+  <b>Application Date:</b> <%= @application.created_at %><br>
+  <b>Last Updated:</b> <%= @application.updated_at %>
+</p>
+
+<h2>Animals Applied For</h2>
+<ul>
+ <% @application.pets.each do |pet| %>
+    <li><%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+  <% end %>
+</ul>
+
+<% if @application.can_add_pets? %>
+  <h2><%= "Add a Pet to this Application" %></h2> 
+  <%= form_with url: "/applications/#{@application.id}", method: :get do |form| %>
+    <%= form.label :query, "Pet Names:" %><br>
+    <%= form.text_field :query %>
+    <%= form.submit "Search" %>
+  <% end %>
+<% end %>
+
+<% if @search_results %>
+  <% @search_results.each do |pet| %>
+    <%= pet.name %><%= button_to "Adopt this Pet", "/application_pets/#{pet.id}/new?application_id=#{@application.id}" %>
+  <% end %>
+<% end %>
+
+<% if @application.pets.size > 0 && @application.can_add_pets? %>
+  <h3>Submit Application</h3>
+  <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
+    <%= f.label :description, "Why would you make a good pet owner?" %>
+    <%= f.text_field :description %><br>
+    <%= f.submit "Submit" %>
+  <% end %>
+<% end %>
