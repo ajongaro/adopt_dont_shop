@@ -65,7 +65,7 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
       click_button("Approve Lucky")
 
       expect(page).to_not have_button("Approve Lucky")
-      expect(page).to have_content("Approved")
+      expect(page).to have_content("Approved!")
     end
   end
 end

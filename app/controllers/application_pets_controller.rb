@@ -8,6 +8,6 @@ class ApplicationPetsController < ApplicationController
   def update
     application_pet = ApplicationPet.where(application_id: params[:id], pet_id: params[:pet_id])
     application_pet.update(status: "Approved")
-    require 'pry'; binding.pry
+    redirect_to "/admin/applications/#{params[:application_id]}"
   end
 end
