@@ -1,7 +1,9 @@
-<!-- /views/admins/applications/show.html.erb -->
+<!-- /views/admin/applications/show.html.erb -->
 
 <h1>Admin Application Show</h1>
 
 <% @application.pets.each do |pet| %>
-  <%= pet.name %><br>
+  <%= pet.name %>
+  # double-check this button syntax and routing
+  <%= button_to "Approve #{pet.name}", "/admin/applications/#{@application.id}?pet_id=#{pet.id}", method: :post %>
 <% end %>
