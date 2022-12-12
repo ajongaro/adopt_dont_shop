@@ -34,6 +34,7 @@ RSpec.describe Application, type: :feature do
   let!(:pet_2) { Pet.create!(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter.id) }
   let!(:pet_3) { Pet.create!(adoptable: true, age: 1, breed: 'domestic shorthair', name: 'Sylvester', shelter_id: shelter_2.id) }
   let!(:pet_4) { Pet.create!(adoptable: true, age: 6, breed: 'poodle mix', name: 'Vester', shelter_id: shelter_2.id) }
+  let!(:pet_5) { Pet.create!(adoptable: true, age: 9, breed: 'bully', name: 'Rocky', shelter_id: shelter_2.id) }
   
   let!(:application_pets) { ApplicationPet.create!(application_id: application.id, pet_id: pet_1.id) }
   let!(:application_pets_2) { ApplicationPet.create!(application_id: application.id, pet_id: pet_2.id) }
@@ -178,6 +179,30 @@ RSpec.describe Application, type: :feature do
 
         expect(page).to_not have_content("Submit Application")
         expect(page).to_not have_content("Why would you make a good pet owner?")
+      end
+    end
+
+    describe 'search functionality' do
+      it 'can find results with partial match' do
+        visit "/applications/#{application_3.id}"
+
+        fill_in("Pet Names:", with: "ter")
+        click_button("Search")
+        
+        expect(current_path).to eq("/applications/#{application_3.id}")
+        expect(page).to have_content("Sylvester")
+        expect(page).to have_content("Lobster")
+        expect(page).to have_content("Vester")
+        expect(page).to_not have_content("Rocky")
+      end
+
+      it 'can find results with partial match case insensitive' do
+        visit "/applications/#{application_3.id}"
+
+        fill_in("Pet Names:", with: "ROckY")
+        click_button("Search")
+        
+        expect(page).to have_content("Rocky")
       end
     end
   end

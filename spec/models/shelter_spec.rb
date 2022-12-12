@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Shelter, type: :model do
   describe 'relationships' do
     it { should have_many(:pets) }
+    it { should have_many(:applications) }
   end
 
   describe 'validations' do
@@ -65,6 +66,14 @@ RSpec.describe Shelter, type: :model do
     describe '.pet_count' do
       it 'returns the number of pets at the given shelter' do
         expect(@shelter_1.pet_count).to eq(3)
+      end
+    end
+
+    describe '.alphabetical_reverse' do
+      it 'returns all shelters in reverse alphabetical order' do 
+        
+        expect(Shelter.all).to_not eq([@shelter_2, @shelter_3, @shelter_1])
+        expect(Shelter.alphabetical_reverse).to eq([@shelter_2, @shelter_3, @shelter_1])
       end
     end
   end
