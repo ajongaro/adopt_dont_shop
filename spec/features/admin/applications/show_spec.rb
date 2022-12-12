@@ -53,13 +53,19 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
 
     it 'has a button next to each pet to approve that specific pet' do
       visit "/admin/applications/#{application_2.id}"      
-      
+
       expect(page).to have_button("Approve #{pet_1.name}")
       expect(page).to have_button("Approve #{pet_2.name}")
     end
 
-    xit 'returns to the /admin/applications/:id show page and approve button is gone' do
+    it 'returns to the /admin/applications/:id show page and approve button is gone' do
+      visit "/admin/applications/#{application_2.id}"      
 
+      expect(page).to have_button("Approve Lucky")
+      click_button("Approve Lucky")
+
+      expect(page).to_not have_button("Approve Lucky")
+      expect(page).to have_content("Approved")
     end
   end
 end

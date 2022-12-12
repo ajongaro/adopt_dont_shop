@@ -3,7 +3,5 @@
 <h1>Admin Application Show</h1>
 
 <% @application.pets.each do |pet| %>
-  <%= pet.name %>
-  # double-check this button syntax and routing
-  <%= button_to "Approve #{pet.name}", "/admin/applications/#{@application.id}?pet_id=#{pet.id}", method: :post %>
+  <p><%= pet.name %><%= button_to "Approve #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}", method: :patch %></p>
 <% end %>
