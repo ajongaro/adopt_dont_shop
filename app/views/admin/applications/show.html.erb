@@ -4,8 +4,7 @@
 
 <% @application.pets.each do |pet| %>
   <p><%= pet.name %>
-  <!-- The if line below needs a @application_pet to check the status on whether to show button or not US12 -->
-  <% if (@application.id + pet.id).status == "Pending" %>
+  <% if pet.pending?(@application.id) %>
     <%= button_to "Approve #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}", method: :patch %></p>
   <% else %>
     <%= "Approved!" %>
