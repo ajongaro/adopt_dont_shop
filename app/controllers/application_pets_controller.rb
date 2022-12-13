@@ -6,8 +6,8 @@ class ApplicationPetsController < ApplicationController
   end
 
   def update
-    application_pet = ApplicationPet.where(application_id: params[:id], pet_id: params[:pet_id])
-    application_pet.update(status: "Approved")
+    application_pet = ApplicationPet.find_by(application_id: params[:id], pet_id: params[:pet_id])
+    application_pet.update(status: params[:status].capitalize)
     redirect_to "/admin/applications/#{params[:id]}"
   end
 end
