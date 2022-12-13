@@ -14,8 +14,6 @@ class Pet < ApplicationRecord
   end
 
   def pending?(application_id)
-    # starting with the AR association of application_pets (from above)
-    # so that we can return a single application_pet record.
     app_pet_record = application_pets.find_by(
       application_id: application_id
     )
