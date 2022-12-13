@@ -14,9 +14,22 @@ class Pet < ApplicationRecord
   end
 
   def pending?(application_id)
-    app_pet_record = application_pets.find_by(
+    app_pet_record(application_id).status == "Pending"
+  end
+
+  def approved?(application_id)
+    app_pet_record(application_id).status == "Approved"
+  end
+
+  def rejected?(application_id)
+    app_pet_record(application_id).status == "Rejected"
+  end
+
+  private
+
+  def app_pet_record(application_id)
+    application_pets.find_by(
       application_id: application_id
     )
-    app_pet_record.status == "Pending"
   end
 end
