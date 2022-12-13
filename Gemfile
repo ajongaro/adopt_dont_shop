@@ -38,7 +38,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   gem 'capybara'
-  gem 'faker'
   gem 'shoulda-matchers'
   gem 'launchy'
   gem 'orderly'
@@ -55,6 +54,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+# Moving from :development, :test
+gem 'faker'
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
