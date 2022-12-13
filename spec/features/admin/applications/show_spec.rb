@@ -62,11 +62,32 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
       visit "/admin/applications/#{application_2.id}"      
 
       expect(page).to have_button("Approve Lucky")
-      save_and_open_page
+      # save_and_open_page
       click_button("Approve Lucky")
-      save_and_open_page
+      # save_and_open_page
       expect(page).to_not have_button("Approve Lucky")
       expect(page).to have_content("Approved!")
+    end
+  end
+
+  describe 'rejecting a pet for adoption' do
+    it 'has a button next to each pet to reject that specific pet' do
+      visit "/admin/applications/#{application_2.id}"      
+
+      expect(page).to have_button("Reject #{pet_1.name}")
+      expect(page).to have_button("Reject #{pet_2.name}")
+    end
+
+    xit 'returns to the /admin/applications/:id show page and approve button AND reject button is gone' do
+      visit "/admin/applications/#{application_2.id}"      
+
+      expect(page).to have_button("Reject Lucky")
+      # save_and_open_page
+      click_button("Reject Lucky")
+      # save_and_open_page
+      expect(page).to_not have_button("Approve Lucky")
+      expect(page).to_not have_button("Reject Lucky")
+      expect(page).to have_content("Rejected!")
     end
   end
 end
