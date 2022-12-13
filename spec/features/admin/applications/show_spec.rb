@@ -41,6 +41,7 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
   let!(:application_pets_3) { ApplicationPet.create!(application_id: application.id, pet_id: pet_3.id) }
   let!(:application_pets_4) { ApplicationPet.create!(application_id: application_2.id, pet_id: pet_1.id) }
   let!(:application_pets_5) { ApplicationPet.create!(application_id: application_2.id, pet_id: pet_2.id) }
+  let!(:application_pets_5) { ApplicationPet.create!(application_id: application_3.id, pet_id: pet_1.id) }
 
   describe 'approving a pet for adoption' do
     it 'shows a list of every pet on that application' do
@@ -62,11 +63,53 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
       visit "/admin/applications/#{application_2.id}"      
 
       expect(page).to have_button("Approve Lucky")
-      save_and_open_page
+      
       click_button("Approve Lucky")
-      save_and_open_page
+      
       expect(page).to_not have_button("Approve Lucky")
       expect(page).to have_content("Approved!")
+    end
+  end
+
+  #us14
+  describe 'multiple approved pets on different applications' do
+    it 'allows a pet to be approved on one application while not affecting another with same pet' do
+      visit "/admin/applications/#{application_2.id}"      
+
+      expect(page).to have_button("Approve Lucky")
+
+      click_button("Approve Lucky")
+
+      expect(page).to_not have_button("Approve Lucky")
+      expect(page).to have_content("Lucky Approved!")
+
+      visit "/admin/applications/#{application_3.id}"      
+
+      expect(page).to have_button("Approve Lucky")
+      click_button("Approve Lucky")
+
+      expect(page).to_not have_button("Approve Lucky")
+      expect(page).to have_content("Lucky Approved!")
+    end
+
+    it 'allows a pet can be declined on one application and approved on another' do
+      visit "/admin/applications/#{application_2.id}"      
+
+      # change this depending on button name
+      expect(page).to have_button("Decline Lucky")
+
+      click_button("Decline Lucky")
+
+      expect(page).to_not have_button("Decline Lucky")
+      expect(page).to have_content("Lucky Declined!")
+
+      visit "/admin/applications/#{application_3.id}"      
+
+      expect(page).to have_button("Approve Lucky")
+      click_button("Approve Lucky")
+
+      expect(page).to_not have_button("Approve Lucky")
+      expect(page).to have_content("Lucky Approved!")
     end
   end
 end
