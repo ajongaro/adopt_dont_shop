@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Application, type: :feature do
+RSpec.describe 'the application show page /applications/:id', type: :feature do
   let!(:application) { Application.create!(
         human_name: "Brad Pitt",
         description: "Very rich, multiple homes, ample backyard space.",

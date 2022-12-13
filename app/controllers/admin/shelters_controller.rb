@@ -1,4 +1,4 @@
-class AdminsController < ApplicationController 
+class Admin::SheltersController < ApplicationController 
 
   def index 
     @shelters = Shelter.alphabetical_reverse

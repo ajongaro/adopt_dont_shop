@@ -1,0 +1,17 @@
+<!-- /views/admin/applications/show.html.erb -->
+
+<h1>Admin Application Show</h1>
+
+<% @application.pets.each do |pet| %>
+  <p><%= pet.name %>
+  <% if pet.pending?(@application.id) %>
+    <%= button_to "Approve #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}&status=approved", method: :patch %></p>
+    <%= button_to "Reject #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}&status=rejected", method: :patch %></p>
+  <% elsif pet.approved?(@application.id) %>
+    <strong>Approved!</strong>
+  <% elsif pet.rejected?(@application.id) %>
+    <strong>Rejected!</strong>
+  <% end %>
+  <br>
+  -----------------------------
+<% end %>
