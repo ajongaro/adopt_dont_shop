@@ -37,6 +37,12 @@ RSpec.describe ApplicationPet, type: :model do
     it { should belong_to :pet }
   end
 
+  describe 'validations' do 
+    it { should validate_presence_of :status }
+    it { should validate_presence_of :application_id }
+    it { should validate_presence_of :pet_id }
+  end
+
   describe 'the model' do
     it 'exists' do
       expect(application_pets).to be_a(ApplicationPet)
