@@ -8,9 +8,9 @@
     <%= button_to "Approve #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}&status=approved", method: :patch %></p>
     <%= button_to "Reject #{pet.name}", "/application_pets/#{@application.id}?pet_id=#{pet.id}&status=rejected", method: :patch %></p>
   <% elsif pet.approved?(@application.id) %>
-    <strong> Approved! </strong>
+    <strong>Approved!</strong>
   <% elsif pet.rejected?(@application.id) %>
-    <strong> Rejected! </strong>
+    <strong>Rejected!</strong>
   <% end %>
   <br>
   -----------------------------
