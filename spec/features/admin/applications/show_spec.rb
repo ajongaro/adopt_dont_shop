@@ -132,4 +132,20 @@ RSpec.describe 'the /admin/applications/:id show page', type: :feature do
       expect(page).to have_content("Lucky Approved!")
     end
   end
+
+  describe 'all pets accepted on an application' do 
+    it ' when all pets on an application are approved, user sees the application status is changed to Approved' do 
+      visit "/admin/applications/#{application_3.id}"      
+
+      expect(page).to have_content("Application Status: In Progress")
+      expect(page).to have_button("Approve All")
+      expect(page).to have_button("Approve Lucky")      
+
+      click_button("Approve All")
+
+      expect(page).to have_content("Application Status: Approved")
+      expect(page).to_not have_button("Approve All")      
+      expect(page).to_not have_button("Approve Lucky")      
+    end     
+  end
 end
