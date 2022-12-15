@@ -2,6 +2,8 @@
 
 <h1>Admin Application Show</h1>
 
+<p><%= "Application Status: #{@application.status}" %></p>
+
 <% @application.pets.each do |pet| %>
   <p><%= pet.name %>
   <% if pet.pending?(@application.id) %>
@@ -15,3 +17,9 @@
   <br>
   -----------------------------
 <% end %>
+
+<div> 
+  <% unless @application.status == "Approved" %>
+    <%= button_to "Approve All", "/application_pets/#{@application.id}?approve_all=true", method: :patch%>
+  <% end %>
+</div>
