@@ -50,4 +50,17 @@ RSpec.describe ApplicationPet, type: :model do
       expect(application_pets.pet_id).to eq(pet_1.id)
     end
   end
+
+  describe 'class methods' do 
+    describe ".all_approved?" do
+      it 'checks if all pets are aprroved on the application' do
+        
+        expect(ApplicationPet.all_approved?).to be(false)
+        
+        ApplicationPet.update(status: "Approved")
+
+        expect(ApplicationPet.all_approved?).to be(true)
+      end
+    end
+  end
 end
